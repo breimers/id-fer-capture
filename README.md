@@ -1,5 +1,8 @@
 # IntrospectData's OpenSource FER Application
+
 Give the function an image and it will return a dictionary of detected faces and emotion predictions.
+
+
 ---
 
 ## Install
