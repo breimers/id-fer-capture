@@ -1,29 +1,45 @@
-import sys, os
-import numpy as np
-import cv2
-from keras.models import load_model
-import uuid
 import base64
-from tensorflow.compat.v1 import ConfigProto
-from tensorflow.compat.v1 import InteractiveSession
+import json
+import os
+import sys
+import uuid
 
+import click
+import magic
+import logging
+
+import cv2
+import numpy as np
+from keras.models import load_model
+from tensorflow.compat.v1 import ConfigProto, InteractiveSession
+from tensorflow import get_logger
+
+#tensorflow
 config = ConfigProto()
 config.gpu_options.allow_growth = True
 session = InteractiveSession(config=config)
+get_logger().setLevel('ERROR')
 
+#logging
+logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
+log = logging.getLogger("fer-capture-log")
 
 #variables
 emotion_dict = {0: "Angry", 1: "Disgust", 2: "Fear", 3: "Happy", 4: "Sad", 5: "Surprise", 6: "Neutral"}
-DEF_MODELPATH = "./special/keras/models/cnn/model.h5"
-DEF_FACE_CASC = "./special/open_cv/cascades/haarcascade_frontalface_default.xml"
+DEF_MODELPATH = os.path.join(os.path.dirname(__file__), "special/keras/models/cnn/model.h5")
+DEF_FACE_CASC = os.path.join(os.path.dirname(__file__), "special/open_cv/cascades/haarcascade_frontalface_default.xml")
 
 def face_check(image_path):
     model_path = os.getenv("ID_FER_MODELPATH", default = DEF_MODELPATH)
     face_casc = os.getenv("ID_FER_FACE_CASC", default = DEF_FACE_CASC)
     model = load_model(model_path)
+    log.info("Loaded model: {}".format(model_path))
+    face_cascade = cv2.CascadeClassifier(face_casc)
+    log.info("Loaded cv2 cascade: {}".format(face_casc))
+    log.info("Preparing image for processing: {}".format(image_path))
     frame = cv2.imread(image_path)
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    face_cascade = cv2.CascadeClassifier(face_casc)
+    log.info("Beginning facial detection.")
     faces = face_cascade.detectMultiScale(
         frame,
         scaleFactor=1.1,
@@ -31,7 +47,9 @@ def face_check(image_path):
         minSize=(48, 48),
         flags = cv2.CASCADE_SCALE_IMAGE
     )
-    data = {"id" : uuid.uuid4(), "faces" : []}
+    log.info("Detected {} faces.".format(len(faces)))
+    data = {"id" : str(uuid.uuid4()), "faces" : []}
+    log.info("Beginning emotion recognition.")
     for (x, y, w, h) in faces:
         roi_gray = gray[y:y + h, x:x + w]
         cropped_img = np.expand_dims(np.expand_dims(cv2.resize(roi_gray, (48, 48)), -1), 0)
@@ -41,7 +59,28 @@ def face_check(image_path):
         img_as_text = base64.b64encode(buffer)
         data["faces"].append({
             "id" : str(uuid.uuid4()),
-            "as_b4_str" : img_as_text,
-            "prediction" : emotion_dict[int(np.argmax(prediction))]
+            "as_b64_utf8_str" : str(img_as_text, "utf-8"),
+            "prediction" : {str(int(np.argmax(prediction))) : emotion_dict[int(np.argmax(prediction))]}
         })
+    log.info("Process completed successfully!")
     return data
+
+@click.command()
+@click.option("--image", help = "Path to JPEG image.")
+@click.option("--out", default = "raw", help = " 'raw': print dictionary to stdout, 'json': json to file ")
+def cli(image, out):
+    mime = magic.Magic(mime=True)
+    if not mime.from_file(image) == "image/jpeg":
+        log.error("{} is not a valid image/jpeg!".format(image))
+        return 1
+    try:
+        data = face_check(image)
+    except Exception as e:
+        log.error(e)
+        return 1
+    if out == "json":
+        with open(str(image.split("/")[-1].replace(".", "-") + ".json"), "w") as f:
+            f.write(json.dumps(data))
+            return 0
+    print(data)
+    return 0
