@@ -21,6 +21,7 @@ Give the function an image and it will return a dictionary of detected faces and
 `fer_capture --image path/to/image` --> returns a python-dict to stdout
 
 `fer_capture --image path/to/image --out json` --> returns a json doc
+
 ---
 
 ## Licenses:
