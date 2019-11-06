@@ -33,4 +33,5 @@ Democratizing facial recognition and emotion recognition technology is essential
 If only governments and large corporations have this tech, we are defenseless.
 
 By making this technology available to everyone at least we can use it too :)
+
 ---
