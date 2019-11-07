@@ -1,3 +1,3 @@
-include ./README.md
-include ./special/keras/models/cnn/model.h5
-include ./special/open_cv/cascades/haarcascade_frontalface_default.xml
+include README.md
+include LICENSE
+include fer_capture/haarcascade_frontalface_default.xml

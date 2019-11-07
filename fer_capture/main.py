@@ -14,24 +14,19 @@ from keras.models import load_model
 from tensorflow.compat.v1 import ConfigProto, InteractiveSession
 from tensorflow import get_logger
 
-#tensorflow
-config = ConfigProto()
-config.gpu_options.allow_growth = True
-session = InteractiveSession(config=config)
-get_logger().setLevel('ERROR')
 
 #logging
 logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 log = logging.getLogger("fer-capture-log")
 
-#variables
-emotion_dict = {0: "Angry", 1: "Disgust", 2: "Fear", 3: "Happy", 4: "Sad", 5: "Surprise", 6: "Neutral"}
-DEF_MODELPATH = os.path.join(os.path.dirname(__file__), "special/keras/models/cnn/model.h5")
-DEF_FACE_CASC = os.path.join(os.path.dirname(__file__), "special/open_cv/cascades/haarcascade_frontalface_default.xml")
-
-def face_check(image_path):
-    model_path = os.getenv("ID_FER_MODELPATH", default = DEF_MODELPATH)
-    face_casc = os.getenv("ID_FER_FACE_CASC", default = DEF_FACE_CASC)
+def face_check(image_path, model_path):
+    #tensorflow
+    config = ConfigProto()
+    config.gpu_options.allow_growth = True
+    session = InteractiveSession(config=config)
+    get_logger().setLevel('ERROR')
+    emotion_dict = {0: "Angry", 1: "Disgust", 2: "Fear", 3: "Happy", 4: "Sad", 5: "Surprise", 6: "Neutral"}
+    face_casc = os.path.join(os.path.dirname(__file__), "haarcascade_frontalface_default.xml")
     model = load_model(model_path)
     log.info("Loaded model: {}".format(model_path))
     face_cascade = cv2.CascadeClassifier(face_casc)
@@ -62,19 +57,23 @@ def face_check(image_path):
             "as_b64_utf8_str" : str(img_as_text, "utf-8"),
             "prediction" : {str(int(np.argmax(prediction))) : emotion_dict[int(np.argmax(prediction))]}
         })
-    log.info("Process completed successfully!")
+    log.info("Detection completed successfully!")
     return data
 
 @click.command()
+@click.option("--model", default = "model.h5", help = "Path to model binary.")
 @click.option("--image", help = "Path to JPEG image.")
 @click.option("--out", default = "raw", help = " 'raw': print dictionary to stdout, 'json': json to file ")
-def cli(image, out):
+def cli(model, image, out):
     mime = magic.Magic(mime=True)
+    if not mime.from_file(model) == "application/x-hdf":
+        log.error("{} is not a valid application/x-hdf!".format(model))
+        return 1
     if not mime.from_file(image) == "image/jpeg":
         log.error("{} is not a valid image/jpeg!".format(image))
         return 1
     try:
-        data = face_check(image)
+        data = face_check(image, model)
     except Exception as e:
         log.error(e)
         return 1
@@ -83,4 +82,4 @@ def cli(image, out):
             f.write(json.dumps(data))
             return 0
     print(data)
-    return 0
+    return data
