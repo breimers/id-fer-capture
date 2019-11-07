@@ -20,11 +20,22 @@ logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 log = logging.getLogger("fer-capture-log")
 
 def face_check(image_path, model_path):
-    #tensorflow
+    """
+    This function performs an FER routine on the given image using the specified model.
+
+    Parameters:
+        image_path (str): Valid file path to a JPEG image.
+        model_path (str): Valid file path to an h5 model.
+
+    Returns:
+        data (dict): Dictionary containing the base64+ut8 encoding of the detected faces along with the predicted emotion.
+    """
+    #tensorflow setup
     config = ConfigProto()
     config.gpu_options.allow_growth = True
     session = InteractiveSession(config=config)
     get_logger().setLevel('ERROR')
+    #begin analysis
     emotion_dict = {0: "Angry", 1: "Disgust", 2: "Fear", 3: "Happy", 4: "Sad", 5: "Surprise", 6: "Neutral"}
     face_casc = os.path.join(os.path.dirname(__file__), "haarcascade_frontalface_default.xml")
     model = load_model(model_path)
@@ -65,6 +76,19 @@ def face_check(image_path, model_path):
 @click.option("--image", help = "Path to JPEG image.")
 @click.option("--out", default = "raw", help = " 'raw': print dictionary to stdout, 'json': json to file ")
 def cli(model, image, out):
+    """
+    This function acts as the interface between the command-line and the face_check function.
+
+    Parameters:
+        image (str): Valid file path to a JPEG image.
+        model (str): Valid file path to an h5 model.
+        out (str): 'raw' or 'json'
+
+    Returns:
+        data (dict): Dictionary containing the base64+ut8 encoding of the detected faces along with the predicted emotion.
+        OR
+        data (json): JSON containing the base64+ut8 encoding of the detected faces along with the predicted emotion
+    """
     mime = magic.Magic(mime=True)
     if not mime.from_file(model) == "application/x-hdf":
         log.error("{} is not a valid application/x-hdf!".format(model))
