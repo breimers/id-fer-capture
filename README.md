@@ -9,7 +9,7 @@ Give the function an image and it will return a dictionary of detected faces and
 
 ### Using pip
 
-`$ pip3 install id_fer_capture`
+`$ pip3 install fer_capture`
 
 ### From source
 
