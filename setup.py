@@ -8,7 +8,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='fer_capture',
-    version='0.1.2',
+    version='0.1.3',
     license='MIT',
     description='Give the function an image and it will return a dictionary of detected faces and emotion predictions.',
     long_description=long_description,
@@ -16,7 +16,7 @@ setup(
     author='Bradley Reimers',
     author_email = 'Bradley@IntrospectData.com',
     url='https://github.com/IntrospectData/id-fer-capture',
-    download_url='https://github.com/IntrospectData/id-fer-capture/archive/v0.1.2.tar.gz',
+    download_url='https://github.com/IntrospectData/id-fer-capture/archive/v0.1.3.tar.gz',
     keywords = ['facial', 'detection', 'emotion', 'recognition'],
     packages=find_packages(),
     include_package_data=True,
