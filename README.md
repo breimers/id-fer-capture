@@ -23,7 +23,7 @@ Please follow GitHub's template for bug reporting.
 
 ### Using pip
 
-`$ pip3 install fer_capture`
+`$ pip3 install fer-capture`
 
 ### From source
 
