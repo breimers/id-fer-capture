@@ -20,7 +20,7 @@ Please follow GitHub's template for bug reporting.
 ---
 
 ## Install
-
+*Note this requires the installation of Tensorflow 2+*
 ### Using pip
 
 `$ pip3 install fer-capture`
@@ -54,6 +54,8 @@ Please follow GitHub's template for bug reporting.
 ---
 
 ## Why:
-Democratizing facial recognition and emotion recognition technology is essential.
+Facial Recognition technology is being rapidly adopted by governments and police departments around the world.
 
-By making this technology available to everyone at least we can use it too :)
+With the clear threat to democracy that such technology poses, it is imperative that netizens are able to understand and use similar tech.
+
+That is why we are trying to Democratize the availability of such technology, so that access is not limited to authoritarian actors.
