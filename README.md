@@ -7,7 +7,7 @@ Give the function an image and it will return a dictionary of detected faces (ba
 
 ## About
 
-This is a python3 command-line wrapper for Facial Detection/Emotion Recognition (FER) using Keras and OpenCV.
+This is a python3 utility for Facial Detection/Emotion Recognition (FER) using Keras and OpenCV.
 
 This project uses the [haarcascade](https://github.com/opencv/opencv/blob/master/data/haarcascades/haarcascade_frontalface_default.xml) xml for facial detection.
 
@@ -43,10 +43,14 @@ Please follow GitHub's template for bug reporting.
 
 `$ wget -P /path/to/somewhere/ https://storage.googleapis.com/id-public-read/model.h5`
 
-`$ fer_capture --model path/to/model --image path/to/image` --> returns a python-dict to stdout
-
-`$ fer_capture --model path/to/model --image path/to/image --out json` --> returns a json doc
-
+```python3
+>>> from fer_capture.main import check_stream
+>>> from fer_capture.main import check_image
+>>> check_stream("/mnt/storage/model.h5", "/mnt/storage/face_test.mp4")
+    [{'faces': {...}}, ...]
+>>> check_image("/mnt/storage/model.h5", "/mnt/storage/face.jpeg")
+    {'faces': {...}}
+```
 ---
 
 ## Why:

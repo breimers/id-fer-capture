@@ -4,9 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+tensorflow = ">=2"
 numpy = "*"
 opencv-python ="*"
-tensorflow = ">=2"
 python-magic ="*"
 
 [dev-packages]
