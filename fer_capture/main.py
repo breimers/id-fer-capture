@@ -29,7 +29,7 @@ def detect_faces(frame):
         flags = cv2.CASCADE_SCALE_IMAGE
     )
     log.info("Detected {} faces.".format(len(faces)))
-    return faces
+    return gray, faces
 
 def face_check(img, model, show=False):
     """
@@ -44,7 +44,7 @@ def face_check(img, model, show=False):
     """
     #begin analysis
     frame = img
-    faces = detect_faces(frame)
+    gray, faces = detect_faces(frame)
     data = {"faces" : []}
     log.info("Beginning emotion recognition.")
 
@@ -98,12 +98,15 @@ def check_image(image_path, model_path, show=False):
     model = tf.keras.models.load_model(model_path)
     return face_check(img, model, show)
 
-def check_stream(input=0, model_path, show=False):
+def check_stream(model_path, input=0, show=False):
     cap = cv2.VideoCapture(input)
     model = tf.keras.models.load_model(model_path)
     data = []
     while True:
         _, img = cap.read()
-        data.append(face_check(img, model, show))
+        if type(img) is not "NoneType":
+            data.append(face_check(img, model, show))
+        else:
+            break
     cap.release()
     return data
