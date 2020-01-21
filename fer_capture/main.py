@@ -105,7 +105,11 @@ def check_stream(model_path, input=0, show=False):
     while True:
         _, img = cap.read()
         if type(img) is not "NoneType":
-            data.append(face_check(img, model, show))
+            try:
+                data.append(face_check(img, model, show))
+            except Exception as e:
+                log.error(e)
+                break
         else:
             break
     cap.release()
