@@ -51,7 +51,7 @@ Please follow GitHub's template for bug reporting.
 >>> check_image("/mnt/storage/model.h5", "/mnt/storage/face.jpeg")
     {'faces': {...}}
 ```
-Add the argument `show=True` to either function to have a window display. You must press/hold a key for the frame to update in this mode.
+Append the argument `show=True` to either function to have a window display. You must press/hold a key for the frame to update in this mode.
 
 
 ---
