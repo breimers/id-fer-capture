@@ -8,21 +8,19 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='fer_capture',
-    version='0.1.3',
+    version='0.2.0',
     license='MIT',
-    description='Give the function an image and it will return a dictionary of detected faces and emotion predictions.',
+    description='Takes an image or video/stream as input and returns detected faces and emotions.',
     long_description=long_description,
     long_description_content_type='text/markdown',
     author='Bradley Reimers',
-    author_email = 'Bradley@IntrospectData.com',
+    author_email = 'b.a.reimers@gmail.com',
     url='https://github.com/IntrospectData/id-fer-capture',
-    download_url='https://github.com/IntrospectData/id-fer-capture/archive/v0.1.3.tar.gz',
-    keywords = ['facial', 'detection', 'emotion', 'recognition'],
+    download_url='https://github.com/IntrospectData/id-fer-capture/archive/v0.2.0.tar.gz',
+    keywords = ['facial', 'detection', 'emotion', 'recognition', 'ai', 'machine', 'vision', 'artificial', 'intelligence'],
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        'Click',
-        'keras',
         'numpy',
         'opencv-python',
         'python-magic',
@@ -31,10 +29,6 @@ setup(
     'gpu':  ['tensorflow-gpu'],
     'cpu': ['tensorflow']
     },
-    entry_points='''
-        [console_scripts]
-        fer_capture=fer_capture.main:cli
-    ''',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',

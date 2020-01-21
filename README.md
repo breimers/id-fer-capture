@@ -1,13 +1,13 @@
 # IntrospectData's OpenSource FER Application
 
-Give the function an image and it will return a dictionary of detected faces (base64 encoded jpeg) and emotion predictions (dictionary of index and prediction).
+Give the function an input and it will return a dictionary of detected faces and emotion predictions.
 
 
 ---
 
 ## About
 
-This is a python3 command-line wrapper for Facial Detection/Emotion Recognition (FER) using Keras and OpenCV.
+This is a python3 utility for Facial Detection/Emotion Recognition (FER) using Keras and OpenCV.
 
 This project uses the [haarcascade](https://github.com/opencv/opencv/blob/master/data/haarcascades/haarcascade_frontalface_default.xml) xml for facial detection.
 
@@ -20,7 +20,7 @@ Please follow GitHub's template for bug reporting.
 ---
 
 ## Install
-
+*Note this requires the installation of Tensorflow 2+*
 ### Using pip
 
 `$ pip3 install fer-capture`
@@ -43,13 +43,22 @@ Please follow GitHub's template for bug reporting.
 
 `$ wget -P /path/to/somewhere/ https://storage.googleapis.com/id-public-read/model.h5`
 
-`$ fer_capture --model path/to/model --image path/to/image` --> returns a python-dict to stdout
+```python3
+>>> from fer_capture.main import check_stream
+>>> from fer_capture.main import check_image
+>>> check_stream("/mnt/storage/model.h5", "/mnt/storage/face_test.mp4")
+    [{'faces': {...}}, ...]
+>>> check_image("/mnt/storage/model.h5", "/mnt/storage/face.jpeg")
+    {'faces': {...}}
+```
+Append the argument `show=True` to either function to have a window display. You must press/hold a key for the frame to update in this mode.
 
-`$ fer_capture --model path/to/model --image path/to/image --out json` --> returns a json doc
 
 ---
 
 ## Why:
-Democratizing facial recognition and emotion recognition technology is essential.
+Facial Recognition technology is being rapidly adopted by governments and police departments around the world.
 
-By making this technology available to everyone at least we can use it too :)
+With the clear threat to democracy that such technology poses, it is imperative that netizens are able to understand and use similar tech.
+
+That is why we are trying to Democratize the availability of such technology, so that access is not limited to authoritarian actors.
