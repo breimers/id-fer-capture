@@ -1,6 +1,6 @@
 # IntrospectData's OpenSource FER Application
 
-Give the function an image and it will return a dictionary of detected faces (base64 encoded jpeg) and emotion predictions (dictionary of index and prediction).
+Give the function an input and it will return a dictionary of detected faces and emotion predictions.
 
 
 ---
