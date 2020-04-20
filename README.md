@@ -33,7 +33,7 @@ Please follow GitHub's template for bug reporting.
 
 `$ source env/bin/activate`
 
-`(env) $ pip3 install id_fer_capture`
+`(env) $ pip3 install id-fer-capture`
   - To include tensorflow:
       - `id-fer_capture[cpu]` for cpu based tensorflow
       - `id-fer_capture[gpu]` for gpu based tensorflow
@@ -41,14 +41,13 @@ Please follow GitHub's template for bug reporting.
 
 ## Use:
 
-`$ wget -P /path/to/somewhere/ https://storage.googleapis.com/id-public-read/model.h5`
 
 ```python3
 >>> from fer_capture.main import check_stream
 >>> from fer_capture.main import check_image
->>> check_stream("/mnt/storage/model.h5", "/mnt/storage/face_test.mp4")
+>>> check_stream("/mnt/storage/face_test.mp4")
     [{'faces': {...}}, ...]
->>> check_image("/mnt/storage/model.h5", "/mnt/storage/face.jpeg")
+>>> check_image("/mnt/storage/face.jpeg")
     {'faces': {...}}
 ```
-Append the argument `show=True` to either function to have a window display. You must press/hold a key for the frame to update in this mode.
+Append the argument `show=True` to either function to have a window display. You can press/hold any key for the frame to update in this mode.

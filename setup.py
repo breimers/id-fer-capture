@@ -8,7 +8,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='fer_capture',
-    version='0.2.0',
+    version='0.3.0',
     license='MIT',
     description='Takes an image or video/stream as input and returns detected faces and emotions.',
     long_description=long_description,
