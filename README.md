@@ -52,13 +52,3 @@ Please follow GitHub's template for bug reporting.
     {'faces': {...}}
 ```
 Append the argument `show=True` to either function to have a window display. You must press/hold a key for the frame to update in this mode.
-
-
----
-
-## Why:
-Facial Recognition technology is being rapidly adopted by governments and police departments around the world.
-
-With the clear threat to democracy that such technology poses, it is imperative that netizens are able to understand and use similar tech.
-
-That is why we are trying to Democratize the availability of such technology, so that access is not limited to authoritarian actors.
