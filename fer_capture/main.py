@@ -109,7 +109,7 @@ def face_check(img, model, show=False):
         cv2.waitKey(0)
     return data
 
-def check_image(model_path=default_model_path, image_path, show=False):
+def check_image(image_path, model_path=default_model_path, show=False):
     """
     This function handles the FER routine for individual images.
 
@@ -125,7 +125,7 @@ def check_image(model_path=default_model_path, image_path, show=False):
     model = tf.keras.models.load_model(model_path)
     return face_check(img, model, show)
 
-def check_stream(model_path=default_model_path, input=0, show=False):
+def check_stream(input=0, model_path=default_model_path, show=False):
     """
     This function handles the FER routine for videos/streams.
 
