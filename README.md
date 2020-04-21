@@ -1,4 +1,4 @@
-# Facial Expression Recognition
+# Facial Expression Recognizer
 
 Give the function an input and it will return a dictionary of detected faces and expression predictions.
 
