@@ -3,7 +3,6 @@
 Give the function an input and it will return a dictionary of detected faces and expression predictions.
 
 
----
 
 ## About
 
@@ -17,7 +16,6 @@ If you fork this project, please contribute back with any fixes or features the 
 
 Please follow GitHub's template for bug reporting.
 
----
 
 ## Install
 ### Using pip
@@ -34,7 +32,6 @@ Please follow GitHub's template for bug reporting.
 `$ git clone git@github.com:IntrospectData/facial-expression-recognizer.git`
 
 `$ python3 setup.py install -e`
----
 
 ## Use:
 
