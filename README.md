@@ -20,31 +20,26 @@ Please follow GitHub's template for bug reporting.
 ---
 
 ## Install
-*Note this requires the installation of Tensorflow 2+*
 ### Using pip
 
-`$ pip3 install fer-capture`
+`$ pip3 install id-fer`
 
 ### From source
 
-`$ git clone git@github.com:IntrospectData/id-fer-capture.git`
+`$ git clone git@github.com:IntrospectData/facial-expression-recognizer.git`
 
 `$ python3 -m venv env`
 
 `$ source env/bin/activate`
 
-`(env) $ pip3 install id-fer-capture`
-  - To include tensorflow:
-      - `id-fer_capture[cpu]` for cpu based tensorflow
-      - `id-fer_capture[gpu]` for gpu based tensorflow
 ---
 
 ## Use:
 
 
 ```python3
->>> from fer_capture.main import check_stream
->>> from fer_capture.main import check_image
+>>> from fer.main import check_stream
+>>> from fer.main import check_image
 >>> check_stream("/mnt/storage/face_test.mp4")
     [{'faces': {...}}, ...]
 >>> check_image("/mnt/storage/face.jpeg")
