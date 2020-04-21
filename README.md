@@ -26,12 +26,14 @@ Please follow GitHub's template for bug reporting.
 
 ### From source
 
-`$ git clone git@github.com:IntrospectData/facial-expression-recognizer.git`
 
 `$ python3 -m venv env`
 
 `$ source env/bin/activate`
 
+`$ git clone git@github.com:IntrospectData/facial-expression-recognizer.git`
+
+`$ python3 setup.py install -e`
 ---
 
 ## Use:
