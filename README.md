@@ -1,13 +1,13 @@
-# IntrospectData's OpenSource FER Application
+# Facial Expression Recognition
 
-Give the function an input and it will return a dictionary of detected faces and emotion predictions.
+Give the function an input and it will return a dictionary of detected faces and expression predictions.
 
 
 ---
 
 ## About
 
-This is a python3 utility for Facial Detection/Emotion Recognition (FER) using Keras and OpenCV.
+This is a python3 cli for Facial Expression Recognition (FER) using Keras and OpenCV.
 
 This project uses the [haarcascade](https://github.com/opencv/opencv/blob/master/data/haarcascades/haarcascade_frontalface_default.xml) xml for facial detection.
 
