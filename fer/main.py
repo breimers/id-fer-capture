@@ -3,6 +3,7 @@ import os
 
 import cv2
 import numpy as np
+import wget
 
 import tensorflow as tf
 
@@ -11,8 +12,10 @@ logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 log = logging.getLogger("fer-capture-log")
 
 #global values
-emotion_dict = {0: "Angry", 1: "Disgust", 2: "Fear", 3: "Happy", 4: "Sad", 5: "Surprise", 6: "Neutral"}
+expression_dict = {0: "Angry", 1: "Disgust", 2: "Fear", 3: "Happy", 4: "Sad", 5: "Surprise", 6: "Neutral"}
 face_casc = os.path.join(os.path.dirname(__file__), "haarcascade_frontalface_default.xml")
+
+default_model_path = wget.download("https://storage.googleapis.com/id-public-read/model.h5")
 
 def path_to_img(image_path):
     """
@@ -53,13 +56,13 @@ def face_check(img, model, show=False):
         model (model): Keras model.
 
     Returns:
-        data (dict): Dictionary containing detected faces along with the predicted emotions.
+        data (dict): Dictionary containing detected faces along with the predicted expressions.
     """
     #begin analysis
     frame = img
     gray, faces = detect_faces(frame)
     data = {"faces" : []}
-    log.info("Beginning emotion recognition.")
+    log.info("Beginning expression recognition.")
 
     for i, (x, y, w, h) in enumerate(faces):
         roi_gray = gray[y:y + h, x:x + w]
@@ -106,7 +109,7 @@ def face_check(img, model, show=False):
         cv2.waitKey(0)
     return data
 
-def check_image(model_path, image_path, show=False):
+def check_image(image_path, model_path=default_model_path, show=False):
     """
     This function handles the FER routine for individual images.
 
@@ -116,13 +119,13 @@ def check_image(model_path, image_path, show=False):
         show (bool): Whether or not to display the media being analyzed.
 
     Returns:
-        data (dict): Dictionary containing detected faces along with the predicted emotions.
+        data (dict): Dictionary containing detected faces along with the predicted expressions.
     """
     img = path_to_img(image_path)
     model = tf.keras.models.load_model(model_path)
     return face_check(img, model, show)
 
-def check_stream(model_path, input=0, show=False):
+def check_stream(input=0, model_path=default_model_path, show=False):
     """
     This function handles the FER routine for videos/streams.
 
@@ -133,7 +136,7 @@ def check_stream(model_path, input=0, show=False):
             when filepath: stream from videofile.
         show (bool): Whether or not to display the media being analyzed.
     Returns:
-        data (list/dict): List of dictionaries containing detected faces along with the predicted emotions from each frame.
+        data (list/dict): List of dictionaries containing detected faces along with the predicted expressions from each frame.
     """
     cap = cv2.VideoCapture(input)
     model = tf.keras.models.load_model(model_path)

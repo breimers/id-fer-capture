@@ -8,6 +8,7 @@ tensorflow = ">=2"
 numpy = "*"
 opencv-python ="*"
 python-magic ="*"
+wget = "*"
 
 [dev-packages]
 

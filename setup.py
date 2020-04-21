@@ -7,8 +7,8 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='fer_capture',
-    version='0.2.0',
+    name='id-fer',
+    version='0.4.0',
     license='MIT',
     description='Takes an image or video/stream as input and returns detected faces and emotions.',
     long_description=long_description,
@@ -16,19 +16,16 @@ setup(
     author='Bradley Reimers',
     author_email = 'b.a.reimers@gmail.com',
     url='https://github.com/IntrospectData/id-fer-capture',
-    download_url='https://github.com/IntrospectData/id-fer-capture/archive/v0.2.0.tar.gz',
-    keywords = ['facial', 'detection', 'emotion', 'recognition', 'ai', 'machine', 'vision', 'artificial', 'intelligence'],
+    download_url='https://github.com/IntrospectData/facial-expression-recognizer/archive/0.4.0.tar.gz',
+    keywords = ['facial', 'detection', 'expression', 'emotion', 'recognition', 'ai', 'machine', 'vision', 'artificial', 'intelligence'],
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
         'numpy',
         'opencv-python',
         'python-magic',
+        'tensorflow',
     ],
-    extras_require = {
-    'gpu':  ['tensorflow-gpu'],
-    'cpu': ['tensorflow']
-    },
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',

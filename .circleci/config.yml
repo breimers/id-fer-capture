@@ -1,0 +1,29 @@
+version: 2.1
+orbs:
+  python: circleci/python@0.2.1
+jobs:
+  build:
+    executor: python/default
+    steps:
+      - checkout
+      - run:
+          command: |
+            pip install twine
+          name: install twine
+      - run:
+          command: |
+            python setup.py sdist bdist_wheel
+          name: Building packages
+      - run:
+          command: |
+            python -m twine upload --repository-url https://upload.pypi.org/legacy/ -u $PYPI_USER -p $PYPI_PASS dist/*
+          name: Publishing to PyPi
+workflows:
+  main:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^\d+\.\d+\.\d+$/
